@@ -1,0 +1,24 @@
+{
+  "name": "eslp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "elasticsearch local proxy",
+  "license": "MIT",
+  "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
+  "homepage": "https://github.com/pmuellr/eslp",
+  "bin": {
+    "eslp": "eslp.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmuellr/eslp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pmuellr/eslp/issues"
+  },
+  "dependencies": {
+    "http-proxy": "^1.18.1",
+    "meow": "^11.0.0",
+    "yaml": "^2.1.3"
+  }
+}
