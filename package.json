@@ -17,7 +17,7 @@
     "url": "https://github.com/pmuellr/eslp/issues"
   },
   "dependencies": {
-    "http-proxy": "^1.18.1",
+    "fastify": "^4.8.1",
     "meow": "^11.0.0",
     "yaml": "^2.1.3"
   }
