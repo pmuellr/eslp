@@ -1,0 +1,67 @@
+{
+    "cells": [
+        {
+            "language": "typescript",
+            "source": [
+                "import { display } from 'node-kernel'\nimport { Client } from '@elastic/elasticsearch'\n\ndisplay.text('accessing ES ...')\nconst CloudID = \"pmuellr_850:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvOjQ0MyRiNjY5MWZmZjU4N2Q0ZWI4OTk0ODI5YTI1YTFiYWZkYyRjZTI0YzY3ZDVlMDc0N2Q3OWRkNWQ4YzE0ZGU5ZWQzMw==\"\nconst ApiKey  = \"REgyTmJJUUJtSEhLVFpQazhoY2c6Y0dUY25UNlZRTk9udXV6bDI4RzJaUQ==\"\n// expires 2022-11-13 10:55am\n\nconst client = new Client({\n  cloud: { id: CloudID },\n  auth: { apiKey: ApiKey }\n})"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "accessing ES ..."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "async function run () {\n  const client = new Client({\n    cloud: { id: CloudID },\n    auth: { apiKey: ApiKey }\n  })\n\n    await client.index({\n      index: 'game-of-thrones',\n      document: {\n        character: 'Ned Stark',\n        quote: 'Winter is coming.'\n      }\n    })\n  \n    await client.index({\n      index: 'game-of-thrones',\n      document: {\n        character: 'Daenerys Targaryen',\n        quote: 'I am the blood of the dragon.'\n      }\n    })\n  \n    await client.index({\n      index: 'game-of-thrones',\n      document: {\n        character: 'Tyrion Lannister',\n        quote: 'A mind needs books like a sword needs a whetstone.'\n      }\n    })\n  \n    // here we are forcing an index refresh, otherwise we will not\n    // get any result in the consequent search\n    await client.indices.refresh({ index: 'game-of-thrones' })\n  \n    // Let's search!\n    const result= await client.search({\n      index: 'game-of-thrones',\n      query: {\n        match: { quote: 'winter' }\n      }\n    })\n  \n    console.log(result.hits.hits)\n  }\n\n  run().catch(console.log)"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[",
+                                "  {",
+                                "    _index: 'game-of-thrones',",
+                                "    _id: 'PH2cbIQBmHHKTZPkw_93',",
+                                "    _score: 1.3546093,",
+                                "    _source: { character: 'Ned Stark', quote: 'Winter is coming.' }",
+                                "  },",
+                                "  {",
+                                "    _index: 'game-of-thrones',",
+                                "    _id: 'qH-vbIQBmHHKTZPkfUg2',",
+                                "    _score: 1.3546093,",
+                                "    _source: { character: 'Ned Stark', quote: 'Winter is coming.' }",
+                                "  },",
+                                "  {",
+                                "    _index: 'game-of-thrones',",
+                                "    _id: '-n-vbIQBmHHKTZPknUut',",
+                                "    _score: 1.3546093,",
+                                "    _source: { character: 'Ned Stark', quote: 'Winter is coming.' }",
+                                "  }",
+                                "]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "const clientSearch = client.search\n\nconst response = await clientSearch({\n  index: '.kibana-event-log*',\n  \n})\nconsole.log(response)"
+            ],
+            "outputs": []
+        }
+    ]
+}
