@@ -2,41 +2,45 @@
 
 /** @typedef { import('./lib/types').Server } Server */
 
+import fs from 'node:fs'
+import path from 'node:path'
+
 // import Fastify from 'fastify'
 
 import { log } from './lib/log.mjs'
-import { getConfig } from './lib/options.mjs'
-import httpProxy from 'http-proxy'
+import { pkg } from './lib/pkg.mjs'
+import { getCli } from './lib/cli.mjs'
+import { getConfig } from './lib/config.mjs'
 
 // const fastify = Fastify({
 //   logger: true
 // })
 
-const config = getConfig()
+const cli = getCli(process.argv.slice(2))
+const { help, version } = cli
+
+const config = getConfig(cli.configFile)
 const { debug, port = 8000, servers } = config
+
+if (help) {
+  console.log(getHelp())
+  process.exit(1)
+}
+
+if (version) {
+  console.log(pkg.version)
+  process.exit(1)
+}
+
+log.setDebug(!!debug)
 log.debug(`config: ${JSON.stringify(config)}`)
-
-const proxy = httpProxy.createProxyServer({
-  target: 'https://elastic:WlscY1Iqj6yLRUKTK0PRLJBq@pmuellr-8-5-0.es.us-central1.gcp.cloud.es.io'
-})
-
-proxy.on('proxyReq', function(proxyReq, req, res, options) {
-  console.log('headers in: ', req.rawHeaders)
-  proxyReq.setHeader('Host', 'pmuellr-8-5-0.es.us-central1.gcp.cloud.es.io')
-  req.headers.host = 'pmuellr-8-5-0.es.us-central1.gcp.cloud.es.io'
-  console.log('headers out:',req.rawHeaders)
-})
-
-proxy.on('error', function(err) {
-  console.log('error: ', err)
-})
-
-console.log(`proxying on http://localhost:${port}`)
-proxy.listen(port)
 
 /** @type { Map<string, Server> } */
 const serverMap = new Map()
+
+console.log('handling servers:')
 for (const server of servers) {
+  console.log(`  http://localhost:${port}/s/${server.name}`)
   serverMap.set(server.name, server)
 }
 
@@ -46,7 +50,7 @@ for (const server of servers) {
 //   return { hallo: true }
 // })
 
-// start(port)
+start(port)
 
 /** @type { (port: number) => Promise<void> } */
 async function start(port) {
@@ -57,3 +61,10 @@ async function start(port) {
     log.exit(`error starting server: ${err}`, 1)
   }
 }
+
+function getHelp() {
+  const thisFile = new URL(import.meta.url).pathname
+  const thisDir = path.dirname(thisFile)
+  return fs.readFileSync(`${thisDir}/README.md`, 'utf-8')
+}
+

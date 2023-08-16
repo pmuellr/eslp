@@ -1,16 +1,37 @@
 // only types, used for validation in vscode
 
-export type { Val, Err, ValOrErr } from './val_or_error'
+export type { Val, Err, ValOrErr } from './val-or-error'
 
-export interface Server {
-  name: string
-  url:  string
-  user: string
-  pass: string
+export interface ServerBase {
+  name:    string
+  es:      string
+  kb:      string
+}
+
+export interface ServerUserPass extends ServerBase {
+  user:    string
+  pass:    string
+}
+
+export interface ServerApiKey extends ServerBase {
+  apiKey:  string
+}
+
+export type Server = ServerUserPass | ServerApiKey
+
+export type IsServerUserPassType = <V>(o: Server) => o is ServerUserPass;
+export type IsServerApiKeyType   = <V>(o: Server) => o is ServerApiKey;
+
+export interface Cli {
+  port?:      number
+  configFile: string
+  help:       boolean
+  version:    boolean
+  debug:      boolean
 }
 
 export interface Config {
-  debug:   boolean
-  port:    number
+  debug?:  boolean
+  port?:   number
   servers: Server[]
 }

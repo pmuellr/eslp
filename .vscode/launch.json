@@ -13,6 +13,24 @@
             ],
             "program": "${workspaceFolder}/eslp.mjs",
             "args": []
-        }
+        },
+        {
+            "type": "node",
+            "name": "test current file",
+            "program": "${relativeFile}",
+            "args": [ 
+                "--test",
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "outputCapture": "std",
+            "env": {
+                "COLORS": "1"
+            },
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+        },
     ]
 }

@@ -1,0 +1,15 @@
+[[servers]]
+name   = "local"
+es     = "http://localhost:9200"
+kb     = "http://localhost:5601"
+user   = "elastic"
+pass   = "changeme"
+
+[[servers]]
+name   = "locals"
+es     = "https://localhost:9200"
+kb     = "https://localhost:5601"
+user   = "elastic"
+pass   = "changeme"
+
+

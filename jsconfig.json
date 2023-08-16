@@ -5,6 +5,7 @@
     "target": "es6",
     "checkJs": true,
     "strictNullChecks": true,
+    "noImplicitAny": true,
     "resolveJsonModule": true,
     "baseUrl": "node_modules"
   },
