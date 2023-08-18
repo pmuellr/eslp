@@ -3,9 +3,13 @@
 export type { Val, Err, ValOrErr } from './val-or-error'
 
 export interface ServerBase {
-  name:    string
-  es:      string
-  kb:      string
+  name:        string
+  esRemoteURL: string
+  kbRemoteURL: string
+  esLocalHost: string
+  kbLocalHost: string
+  esLocalURL?: string
+  kbLocalURL?: string
 }
 
 export interface ServerUserPass extends ServerBase {

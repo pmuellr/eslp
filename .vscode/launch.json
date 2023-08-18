@@ -5,14 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "command": "npm test",
+            "name": "test all",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
             "type": "node",
             "request": "launch",
-            "name": "eslp",
+            "name": "eslp.mjs",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/eslp.mjs",
-            "args": []
+            "args": ["--debug"]
         },
         {
             "type": "node",
@@ -32,5 +38,21 @@
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
         },
-    ]
+        {
+            "type": "node",
+            "name": "run current file",
+            "program": "${relativeFile}",
+            "args": ["--help"],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "outputCapture": "std",
+            "env": {
+                "COLORS": "1"
+            },
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+        },
+   ]
 }
