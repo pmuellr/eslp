@@ -5,10 +5,7 @@ eslp - Elastic Stack Local Proxy
 
 - an unauthenticated CORS-friendly http server running on localhost
 - that proxies to authenticated elastic servers running elsewhere
-- via a URL path name prefix
-
-Obviously, this server should not be exposed outside your own machine,
-and you should shut it down when it's not needed.
+- via a locally available DNS host names
 
 The reason it exists is to make it easy to access elasticsearch servers from
 "web apps" like Notebooks, which can easily communicate with a CORS-friendly
@@ -58,6 +55,20 @@ In this case, the `local` and `locals` entries are provided by default,
 and `pmuellr-8-9-0` and `pmuellr-8-9-0-apikey` were provided by a 
 config file.
 
+Each host name is an alias to `localhost`, and so each HTTP request to
+that port will be disambiguated via it's `Host` header.
+
+The DNS entries are only available on your local network, given the [.local][]
+suffix.  That's good and bad.  The proxies aren't available via DNS outside your
+own local network which is great.  The proxies ARE available via DNS within your
+own network, but the server only accepts connections from localhost.  That means
+to separate machines on the same local network may fight over these names.  If
+that becomes a problem, there is likely some straight-forward fix like allowing
+another string in the DNS names.
+
+[.local]: https://en.wikipedia.org/wiki/.local
+
+config file
 ================================================================================
 
 The config file is a TOML file describing the operation of eslp.  
@@ -67,6 +78,8 @@ which can be overridden by the `--port` option.
 
 There also can be an array of `server` objects.  The default server objects
 configured are specified as:
+
+    port = 19200
 
     [[server]]
     name   = "local"
