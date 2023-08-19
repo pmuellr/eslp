@@ -50,7 +50,7 @@ for (const server of configServers) {
 
 // print the servers, and print again if enter is pressed at stdin
 const rl = readline.createInterface({ input: process.stdin })
-rl.on('line', servers.dump)
+rl.on('line', () => servers.dump())
 servers.dump()
 
 // start 'er up!

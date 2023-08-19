@@ -1,6 +1,6 @@
 {
   "name": "eslp",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "description": "elasticsearch local proxy",
   "license": "MIT",
