@@ -23,8 +23,8 @@ export interface ServerApiKey extends ServerBase {
 
 export type Server = ServerUserPass | ServerApiKey
 
-export type IsServerUserPassType = <V>(o: Server) => o is ServerUserPass;
-export type IsServerApiKeyType   = <V>(o: Server) => o is ServerApiKey;
+export type IsServerUserPassType = <V>(o: Server) => o is ServerUserPass
+export type IsServerApiKeyType   = <V>(o: Server) => o is ServerApiKey
 
 export interface Cli {
   port?:      number

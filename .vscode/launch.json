@@ -18,7 +18,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/eslp.mjs",
-            "args": ["--debug"]
+            "args": ["--config", "~/Box/elastic-cloud/eslp.toml"]
         },
         {
             "type": "node",

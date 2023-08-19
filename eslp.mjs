@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 /** @typedef { import('./lib/types').Server } Server */
+/** @typedef { import('./lib/servers.mjs').Servers } Servers */
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -21,11 +22,12 @@ const cli = getCli(process.argv.slice(2))
 const { help, version, debug, configFile } = cli
 
 log.setDebug(!!debug)
-log.debug(`cli: ${JSON.stringify(cli)}`)
 
 const config = getConfig(configFile)
-log.debug(`config: ${JSON.stringify(config)}`)
 const { servers: configServers } = config
+
+log.debug(`cli: ${JSON.stringify(cli)}`)
+log.debug(`config: ${JSON.stringify(config, redactSecrets)}`)
 
 const port = cli.port || config.port || DEFAULT_PORT
 
@@ -40,9 +42,6 @@ if (version) {
   process.exit(1)
 }
 
-log.setDebug(!!debug)
-log.debug(`config: ${JSON.stringify(config)}`)
-
 // build data structures
 const servers = newServers(port)
 for (const server of configServers) {
@@ -55,12 +54,12 @@ rl.on('line', servers.dump)
 servers.dump()
 
 // start 'er up!
-start(port)
+start(servers, port)
 
-/** @type { (port: number) => Promise<void> } */
-async function start(port) {
+/** @type { (servers: Servers, port: number) => Promise<void> } */
+async function start(servers, port) {
   try {
-    await startProxy(port)
+    await startProxy(servers, port)
   } catch (err) {
     log.exit(`error starting server: ${err}`, 1)
   }
@@ -72,4 +71,12 @@ function getHelp() {
   const thisFile = new URL(import.meta.url).pathname
   const thisDir = path.dirname(thisFile)
   return fs.readFileSync(`${thisDir}/README.md`, 'utf-8')
+}
+
+/** @type { (key: string, val: any) => any } */
+function redactSecrets(key, val) {
+  if (key === 'user') return '<** user **>'
+  if (key === 'pass') return '<** pass **>'
+  if (key === 'apiKey') return '<** apiKey **>'
+  return val
 }
