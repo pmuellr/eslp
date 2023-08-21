@@ -39,17 +39,17 @@ with host names for each proxy.  For example:
 
     eslp: handling servers:
     eslp:    local
-    eslp:       elasticsearch: http://local.es.eslp.local:19200
-    eslp:       kibana:        http://local.kb.eslp.local:19200
+    eslp:       elasticsearch: http://local.es.local:19200
+    eslp:       kibana:        http://local.kb.local:19200
     eslp:    locals
-    eslp:       elasticsearch: http://locals.es.eslp.local:19200
-    eslp:       kibana:        http://locals.kb.eslp.local:19200
+    eslp:       elasticsearch: http://locals.es.local:19200
+    eslp:       kibana:        http://locals.kb.local:19200
     eslp:    pmuellr-8-9-0
-    eslp:       elasticsearch: http://pmuellr-8-9-0.es.eslp.local:19200
-    eslp:       kibana:        http://pmuellr-8-9-0.kb.eslp.local:19200
+    eslp:       elasticsearch: http://pmuellr-8-9-0.es.local:19200
+    eslp:       kibana:        http://pmuellr-8-9-0.kb.local:19200
     eslp:    pmuellr-8-9-0-apikey
-    eslp:       elasticsearch: http://pmuellr-8-9-0-apikey.es.eslp.local:19200
-    eslp:       kibana:        http://pmuellr-8-9-0-apikey.kb.eslp.local:19200
+    eslp:       elasticsearch: http://pmuellr-8-9-0-apikey.es.local:19200
+    eslp:       kibana:        http://pmuellr-8-9-0-apikey.kb.local:19200
 
 In this case, the `local` and `locals` entries are provided by default,
 and `pmuellr-8-9-0` and `pmuellr-8-9-0-apikey` were provided by a 
@@ -105,6 +105,10 @@ Rather than use `user` and `pass`, you can use `apiKey`.
 
 change log
 ================================================================================
+
+#### 1.0.1 - 2023-08-21
+
+- remove interstitial `.eslp` from domain names (eg http://local.es.eslp.local:19200)
 
 #### 1.0.0 - 2023-08-19
 
