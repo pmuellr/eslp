@@ -26,13 +26,13 @@ usage
     
 options:
 
-| option               | description
-| -------------------- | -----------
-| `-h --help`          | display help
-| `-d --debug`         | generate verbose output when running
-| `-v --version`       | print version
-| `-p --port <num>`    | use this port number instead of default 19200
-| `-c --config <file>` | use this config file instead of `~/.eslp.toml`
+| short | long              | description
+| ----- |------------------ | ---------------------------------------------
+| `-h`  | `--help`          | display help
+| `-d`  | `--debug`         | generate verbose output when running
+| `-v`  | `--version`       | print version
+| `-p`  | `--port <num>`    | use this port number instead of default 19200
+| `-c`  | `--config <file>` | use this config file instead of `~/.eslp.toml`
 
 Once started, the proxy will become available and populate local DNS
 with host names for each proxy.  For example:
@@ -108,7 +108,7 @@ change log
 
 #### 1.0.1 - 2023-08-21
 
-- remove interstitial `.eslp` from domain names (eg http://local.es.eslp.local:19200)
+- remove interstitial `.eslp` from domain names (eg `http://local.es.eslp.local:19200`)
 
 #### 1.0.0 - 2023-08-19
 
