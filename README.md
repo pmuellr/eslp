@@ -38,18 +38,22 @@ Once started, the proxy will become available and populate local DNS
 with host names for each proxy.  For example:
 
     eslp: handling servers:
-    eslp:    local
-    eslp:       elasticsearch: http://local.es.local:19200
-    eslp:       kibana:        http://local.kb.local:19200
-    eslp:    locals
-    eslp:       elasticsearch: http://locals.es.local:19200
-    eslp:       kibana:        http://locals.kb.local:19200
-    eslp:    pmuellr-8-9-0
-    eslp:       elasticsearch: http://pmuellr-8-9-0.es.local:19200
-    eslp:       kibana:        http://pmuellr-8-9-0.kb.local:19200
-    eslp:    pmuellr-8-9-0-apikey
-    eslp:       elasticsearch: http://pmuellr-8-9-0-apikey.es.local:19200
-    eslp:       kibana:        http://pmuellr-8-9-0-apikey.kb.local:19200
+
+    # local
+    export ES_URL=http://local.es.local:19200
+    export KB_URL=http://local.kb.local:19200
+
+    # locals
+    export ES_URL=http://locals.es.local:19200
+    export KB_URL=http://locals.kb.local:19200
+
+    # pmuellr-8-9-0
+    export ES_URL=http://pmuellr-8-9-0.es.local:19200
+    export KB_URL=http://pmuellr-8-9-0.kb.local:19200
+
+    # pmuellr-8-9-0-apikey
+    export ES_URL=http://pmuellr-8-9-0-apikey.es.local:19200
+    export KB_URL=http://pmuellr-8-9-0-apikey.kb.local:19200
 
 In this case, the `local` and `locals` entries are provided by default,
 and `pmuellr-8-9-0` and `pmuellr-8-9-0-apikey` were provided by a 
