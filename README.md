@@ -66,6 +66,12 @@ to separate machines on the same local network may fight over these names.  If
 that becomes a problem, there is likely some straight-forward fix like allowing
 another string in the DNS names.
 
+When this program runs, it writes the names of the hosts it's proxying to stdout.
+When you press the "Enter" key at the terminal this program is running, it will
+reload the config file - but just the servers, not the port.  If you edit and
+save the config file, the config file will also be reloaded, but the port (if
+specified) will be ignored.
+
 [.local]: https://en.wikipedia.org/wiki/.local
 
 config file
@@ -105,6 +111,10 @@ Rather than use `user` and `pass`, you can use `apiKey`.
 
 change log
 ================================================================================
+
+#### 1.0.2 - 2023-09-01
+
+- reload config file when expected
 
 #### 1.0.1 - 2023-08-21
 

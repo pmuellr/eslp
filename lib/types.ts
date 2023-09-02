@@ -35,7 +35,8 @@ export interface Cli {
 }
 
 export interface Config {
-  debug?:  boolean
-  port?:   number
-  servers: Server[]
+  debug?:   boolean
+  port?:    number
+  servers:  Server[]
+  fileName: string
 }
