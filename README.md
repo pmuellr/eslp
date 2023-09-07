@@ -7,17 +7,14 @@ eslp - Elastic Stack Local Proxy
 - that proxies to authenticated elastic servers running elsewhere
 - via a locally available DNS host names
 
-The reason it exists is to make it easy to access elasticsearch servers from
-"web apps" like Notebooks, which can easily communicate with a CORS-friendly
-localhost server.
-
-It also avoids the need for authorization, handing both user/password and
-API keys.
-
 install
 ================================================================================
 
     npm install -g pmuellr/eslp
+
+or run via
+
+    npx pmuellr/eslp
     
 usage
 ================================================================================
@@ -66,7 +63,7 @@ The DNS entries are only available on your local network, given the [.local][]
 suffix.  That's good and bad.  The proxies aren't available via DNS outside your
 own local network which is great.  The proxies ARE available via DNS within your
 own network, but the server only accepts connections from localhost.  That means
-to separate machines on the same local network may fight over these names.  If
+two separate machines on the same local network may fight over these names.  If
 that becomes a problem, there is likely some straight-forward fix like allowing
 another string in the DNS names.
 
@@ -81,7 +78,12 @@ specified) will be ignored.
 config file
 ================================================================================
 
-The config file is a TOML file describing the operation of eslp.  
+The config file is a TOML file describing the operation of eslp.
+
+It must be in mode '600' (user: read/write, group/world: no access).
+To make your config file mode '600', use the command:
+
+    chmod 600 my-config-file-name.toml
 
 There can be a property `port` specifing the port to run the proxy on,
 which can be overridden by the `--port` option.
@@ -115,6 +117,10 @@ Rather than use `user` and `pass`, you can use `apiKey`.
 
 change log
 ================================================================================
+
+#### 1.0.3 - 2023-09-06
+
+- fix up a few things
 
 #### 1.0.2 - 2023-09-01
 
