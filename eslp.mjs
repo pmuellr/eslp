@@ -66,17 +66,15 @@ async function start(servers, port) {
 
 /** @type { (fileName: string, servers: Servers) => Promise<void> } */
 async function reloadConfigWhenChanged(fileName, servers) {
-  /** @type { ReturnType<watch> } */
-  let watcher
   try {
-    watcher = watch(fileName)
+    const watcher = watch(fileName)
+
+    for await (const event of watcher) {
+      reload(fileName, servers, 'config file changed')
+    }
   } catch (err) {
     log(`error watching config file "${fileName}", not watching for file: ${err}`)
     return
-  }
-
-  for await (const event of watcher) {
-    reload(fileName, servers, 'config file changed')
   }
 }
 
