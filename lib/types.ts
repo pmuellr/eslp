@@ -37,6 +37,8 @@ export interface Cli {
 export interface Config {
   debug?:   boolean
   port?:    number
+  cert?:    string
+  key?:     string
   servers:  Server[]
   fileName: string
 }

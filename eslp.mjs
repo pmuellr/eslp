@@ -40,7 +40,7 @@ async function main() {
 
   // build data structures
   const port = cli.port || config.port || DEFAULT_PORT
-  const servers = createServers(port, configServers)
+  const servers = createServers(port, configServers, !!config.cert)
 
   // set up config file re-loaders
   reloadConfigWhenChanged(configFileName, servers)
@@ -50,13 +50,13 @@ async function main() {
   servers.dump()
 
   // start 'er up!
-  start(servers, port)
+  start(servers, port, config.cert, config.key)
 }
 
-/** @type { (servers: Servers, port: number) => Promise<void> } */
-async function start(servers, port) {
+/** @type { (servers: Servers, port: number, cert: string | undefined, key: string | undefined) => Promise<void> } */
+async function start(servers, port, cert, key) {
   try {
-    await startProxy(servers, port)
+    await startProxy(servers, port, cert, key)
   } catch (err) {
     log.exit(`error starting server: ${err}`, 1)
   }

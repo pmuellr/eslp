@@ -37,20 +37,20 @@ with host names for each proxy.  For example:
     eslp: handling servers:
 
     # local
-    export ES_URL=http://local.es.local:19200
-    export KB_URL=http://local.kb.local:19200
+    export ES_URL=http://local-es.eslp.local:19200
+    export KB_URL=http://local-kb.eslp.local:19200
 
     # locals
-    export ES_URL=http://locals.es.local:19200
-    export KB_URL=http://locals.kb.local:19200
+    export ES_URL=http://locals-es.eslp.local:19200
+    export KB_URL=http://locals-kb.eslp.local:19200
 
     # pmuellr-8-9-0
-    export ES_URL=http://pmuellr-8-9-0.es.local:19200
-    export KB_URL=http://pmuellr-8-9-0.kb.local:19200
+    export ES_URL=http://pmuellr-8-9-0-es.eslp.local:19200
+    export KB_URL=http://pmuellr-8-9-0-kb.eslp.local:19200
 
     # pmuellr-8-9-0-apikey
-    export ES_URL=http://pmuellr-8-9-0-apikey.es.local:19200
-    export KB_URL=http://pmuellr-8-9-0-apikey.kb.local:19200
+    export ES_URL=http://pmuellr-8-9-0-apikey-es.eslp.local:19200
+    export KB_URL=http://pmuellr-8-9-0-apikey-kb.eslp.local:19200
 
 In this case, the `local` and `locals` entries are provided by default,
 and `pmuellr-8-9-0` and `pmuellr-8-9-0-apikey` were provided by a 
@@ -85,10 +85,23 @@ To make your config file mode '600', use the command:
 
     chmod 600 my-config-file-name.toml
 
-There can be a property `port` specifing the port to run the proxy on,
-which can be overridden by the `--port` option.
+The following properties can be used:
 
-There also can be an array of `server` objects.  The default server objects
+- `port` - the port to run on, overrideable on the command line
+- `cert` - TLS certificate file to run the servers as https
+- `key` - TLS key file to run the servers as https
+- `servers` - an array of server entries, see below.
+
+The `cert` property should be a file name of a TLS certificate to use
+when running the server as https servers instead of http servers.
+See the `cert` directory for some instructions on building the
+certificate, which should be self-signed and set up with a wild card
+for all the hosts running under the server.
+
+When using the `cert` property, you must also use the `key` property.
+A key file is also generated in the `cert` directory.
+
+The `server` property is an array of objects.  The default server objects
 configured are specified as:
 
     port = 19200
@@ -118,6 +131,10 @@ Rather than use `user` and `pass`, you can use `apiKey`.
 change log
 ================================================================================
 
+#### 1.0.4 - 2024-01-30
+
+- add https support
+
 #### 1.0.3 - 2023-09-06
 
 - fix up a few things
@@ -128,7 +145,7 @@ change log
 
 #### 1.0.1 - 2023-08-21
 
-- remove interstitial `.eslp` from domain names (eg `http://local.es.eslp.local:19200`)
+- remove interstitial `.eslp` from domain names (eg `http://local.es.eslp.eslp.local:19200`)
 
 #### 1.0.0 - 2023-08-19
 

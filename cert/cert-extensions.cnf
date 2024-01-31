@@ -1,0 +1,6 @@
+
+basicConstraints  = CA:FALSE
+extendedKeyUsage  = serverAuth
+
+subjectAltName    = DNS:*.eslp.local
+
