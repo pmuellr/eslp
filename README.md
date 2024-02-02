@@ -40,10 +40,6 @@ with host names for each proxy.  For example:
     export ES_URL=http://local-es.eslp.local:19200
     export KB_URL=http://local-kb.eslp.local:19200
 
-    # locals
-    export ES_URL=http://locals-es.eslp.local:19200
-    export KB_URL=http://locals-kb.eslp.local:19200
-
     # pmuellr-8-9-0
     export ES_URL=http://pmuellr-8-9-0-es.eslp.local:19200
     export KB_URL=http://pmuellr-8-9-0-kb.eslp.local:19200
@@ -52,9 +48,7 @@ with host names for each proxy.  For example:
     export ES_URL=http://pmuellr-8-9-0-apikey-es.eslp.local:19200
     export KB_URL=http://pmuellr-8-9-0-apikey-kb.eslp.local:19200
 
-In this case, the `local` and `locals` entries are provided by default,
-and `pmuellr-8-9-0` and `pmuellr-8-9-0-apikey` were provided by a 
-config file.
+    eslp: server started on port 19200, access at https://proxy.eslp.local:19200/
 
 Each host name is an alias to `localhost`, and so each HTTP request to
 that port will be disambiguated via it's `Host` header.
@@ -130,6 +124,10 @@ Rather than use `user` and `pass`, you can use `apiKey`.
 
 change log
 ================================================================================
+
+#### 1.0.5 - 2024-02-01
+
+- add http[s]://proxy.eslp.local to provide basic web page and JSON index
 
 #### 1.0.4 - 2024-01-30
 
