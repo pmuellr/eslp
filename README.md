@@ -23,16 +23,17 @@ usage
     
 options:
 
-| short | long              | description
-| ----- |------------------ | ---------------------------------------------
-| `-h`  | `--help`          | display help
-| `-d`  | `--debug`         | generate verbose output when running
-| `-v`  | `--version`       | print version
-| `-p`  | `--port <num>`    | use this port number instead of default 19200
-| `-c`  | `--config <file>` | use this config file instead of `~/.eslp.toml`
+| short | long                 | description
+| ----- |--------------------- | ---------------------------------------------
+| `-h`  | `--help`             | display help
+| `-d`  | `--debug`            | generate verbose output when running
+| `-v`  | `--version`          | print version
+| `-p`  | `--port <num>`       | use this port number instead of default 19200
+| `-c`  | `--config <file>`    | use this config file instead of `~/.eslp.toml`
+| `-o`  | `--output plain|env` | generate output in plain or env var format
 
 Once started, the proxy will become available and populate local DNS
-with host names for each proxy.  For example:
+with host names for each proxy.  For example: (using `-o env`)
 
     eslp: handling servers:
 
@@ -124,6 +125,10 @@ Rather than use `user` and `pass`, you can use `apiKey`.
 
 change log
 ================================================================================
+
+#### 1.0.6 - 2024-05-04
+
+- add `--output` / `-o` option to output server in plain or env var format
 
 #### 1.0.5 - 2024-02-01
 

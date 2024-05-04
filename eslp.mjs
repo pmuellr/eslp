@@ -43,11 +43,11 @@ async function main() {
   const servers = createServers(port, configServers, !!config.cert)
 
   // set up config file re-loaders
-  reloadConfigWhenChanged(configFileName, servers)
-  reloadConfigWhenHumans(configFileName, servers)
+  reloadConfigWhenChanged(configFileName, servers, cli.output)
+  reloadConfigWhenHumans(configFileName, servers, cli.output)
 
   // print servers
-  servers.dump()
+  servers.output(cli.output)
 
   // start 'er up!
   start(servers, port, config.cert, config.key)
@@ -64,13 +64,13 @@ async function start(servers, port, cert, key) {
   advertiseHostNamesViaMDNS(servers)  
 }
 
-/** @type { (fileName: string, servers: Servers) => Promise<void> } */
-async function reloadConfigWhenChanged(fileName, servers) {
+/** @type { (fileName: string, servers: Servers, outputType: string) => Promise<void> } */
+async function reloadConfigWhenChanged(fileName, servers, outputType) {
   try {
     const watcher = watch(fileName)
 
     for await (const event of watcher) {
-      reload(fileName, servers, 'config file changed')
+      reload(fileName, servers, 'config file changed', outputType)
     }
   } catch (err) {
     log(`error watching config file "${fileName}", not watching for file: ${err}`)
@@ -78,18 +78,19 @@ async function reloadConfigWhenChanged(fileName, servers) {
   }
 }
 
-/** @type { (fileName: string, servers: Servers) => Promise<void> } */
-async function reloadConfigWhenHumans(fileName, servers) {
+/** @type { (fileName: string, servers: Servers, outputType: string) => Promise<void> } */
+async function reloadConfigWhenHumans(fileName, servers, outputType) {
   const rl = readline.createInterface({ input: process.stdin })
 
-  rl.on('line', () => reload(fileName, servers, 'humans'))
+  rl.on('line', () => reload(fileName, servers, 'humans', outputType))
 }
 
-/** @type { (fileName: string, servers: Servers, reason: string) => Promise<void> } */
-async function reload(fileName, servers, reason) {
-  log(`reloading config file: ${fileName} because ${reason}}`)
+/** @type { (fileName: string, servers: Servers, reason: string, outputType: string) => Promise<void> } */
+async function reload(fileName, servers, reason, outputType) {
+  const date = new Date().toISOString()
+  log(`${date} - reloading config file: ${fileName} because ${reason}`)
   servers.replaceServers(getConfig(fileName).servers)
-  servers.dump()
+  servers.output(outputType)
 }
 
 /** @type { () => Promise<string> } */

@@ -32,6 +32,7 @@ export interface Cli {
   help:       boolean
   version:    boolean
   debug:      boolean
+  output:     string
 }
 
 export interface Config {
