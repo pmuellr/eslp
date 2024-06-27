@@ -126,6 +126,10 @@ Rather than use `user` and `pass`, you can use `apiKey`.
 change log
 ================================================================================
 
+#### 1.0.7 - 2024-06-26
+
+- add CORS headers to `https://proxy.eslp.local/index.json`
+
 #### 1.0.6 - 2024-05-04
 
 - add `--output` / `-o` option to output server in plain or env var format
