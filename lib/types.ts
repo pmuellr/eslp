@@ -35,6 +35,11 @@ export interface Cli {
   output:     string
 }
 
+export interface Cors {
+  origins?: string[]
+  methods?: string[]
+}
+
 export interface Config {
   debug?:   boolean
   port?:    number
@@ -42,4 +47,5 @@ export interface Config {
   key?:     string
   servers:  Server[]
   fileName: string
+  cors?:    Cors
 }

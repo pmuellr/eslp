@@ -86,6 +86,8 @@ The following properties can be used:
 - `cert` - TLS certificate file to run the servers as https
 - `key` - TLS key file to run the servers as https
 - `servers` - an array of server entries, see below.
+- `cors` - contains two properties, `origins` and `methods`, 
+  both arrays of strings
 
 The `cert` property should be a file name of a TLS certificate to use
 when running the server as https servers instead of http servers.
@@ -95,6 +97,22 @@ for all the hosts running under the server.
 
 When using the `cert` property, you must also use the `key` property.
 A key file is also generated in the `cert` directory.
+
+The `cors` property is required when you want CORS support.  You must 
+list the 
+[origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)s 
+that will be accessing the proxy, and the methods that
+are allowed to be used.  And example which allows `GET` and `POST`
+requests from two hosts - a localhost one and a GitHub pages one is
+below.
+
+```
+[cors]
+	origins = [ "http://localhost:3000", "https://pmuellr.github.io" ]
+	methods = [ "GET", "POST" ]
+```
+
+
 
 The `server` property is an array of objects.  The default server objects
 configured are specified as:
@@ -125,6 +143,10 @@ Rather than use `user` and `pass`, you can use `apiKey`.
 
 change log
 ================================================================================
+
+#### 1.0.8 - 2024-07-04
+
+- add pretty much mandatory `cors` options in config
 
 #### 1.0.7 - 2024-06-26
 

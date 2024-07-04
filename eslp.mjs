@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 /** @typedef { import('./lib/types').Server } Server */
+/** @typedef { import('./lib/types').Cors } Cors */
 /** @typedef { import('./lib/servers.mjs').Servers } Servers */
 
 // import fs from 'node:fs'
@@ -11,7 +12,7 @@ import * as readline from 'node:readline/promises'
 import { log } from './lib/log.mjs'
 import { pkg } from './lib/pkg.mjs'
 import { getCli } from './lib/cli.mjs'
-import { startProxy } from './lib/proxy.mjs'
+import { startProxy, updateCors } from './lib/proxy.mjs'
 import { createServers } from './lib/servers.mjs'
 import { advertiseHostNamesViaMDNS } from './lib/m-dns.mjs'
 import { getConfig, expandInitialTilde } from './lib/config.mjs'
@@ -50,13 +51,13 @@ async function main() {
   servers.output(cli.output)
 
   // start 'er up!
-  start(servers, port, config.cert, config.key)
+  start(servers, port, config.cert, config.key, config.cors || {})
 }
 
-/** @type { (servers: Servers, port: number, cert: string | undefined, key: string | undefined) => Promise<void> } */
-async function start(servers, port, cert, key) {
+/** @type { (servers: Servers, port: number, cert: string | undefined, key: string | undefined, cors: Cors) => Promise<void> } */
+async function start(servers, port, cert, key, cors) {
   try {
-    await startProxy(servers, port, cert, key)
+    await startProxy(servers, port, cert, key, cors)
   } catch (err) {
     log.exit(`error starting server: ${err}`, 1)
   }
@@ -89,7 +90,9 @@ async function reloadConfigWhenHumans(fileName, servers, outputType) {
 async function reload(fileName, servers, reason, outputType) {
   const date = new Date().toISOString()
   log(`${date} - reloading config file: ${fileName} because ${reason}`)
-  servers.replaceServers(getConfig(fileName).servers)
+  const newConfig = getConfig(fileName)
+  servers.replaceServers(newConfig.servers)
+  updateCors(newConfig.cors || {})
   servers.output(outputType)
 }
 
